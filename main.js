@@ -33,10 +33,6 @@ Vue.component("product", {
     >
       Add To Cart
     </button>
-
-    <div class="cart">
-      <p>Cart({{ cart }})</p>
-    </div>
   </div>
 </div>
   `,
@@ -59,14 +55,13 @@ Vue.component("product", {
           variantImage: "./assets/vmSocks-blue-onWhite.jpg",
           variantQuantity: 0
         }
-      ],
-      cart: 0
+      ]
     };
   },
 
   methods: {
     addToCart: function() {
-      this.cart += 1;
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId);
     },
     // not all browsers support this shorthand syntax below
     updateProduct(index) {
@@ -97,6 +92,12 @@ Vue.component("product", {
 var App = new Vue({
   el: "#app",
   data: {
-    premium: true
+    premium: true,
+    cart: []
+  },
+  methods: {
+    updateCart(id) {
+      this.cart.push(id);
+    }
   }
 });
